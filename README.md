@@ -111,7 +111,7 @@ Deployed Application (optional): [Flixster Deployed Site](https://flixster-g0if.
 
 ### Walkthrough Video
 
-**Walkthrough video:** [Flixster Walkthrough] https://www.loom.com/share/ef2fbaaf75c44f009090dd91b5bdc59c
+**Walkthrough video:** [Flixster Walkthrough] https://www.loom.com/share/d10f1d8a4a3c4f32a25fd44d8199e2f5
 
 ### Reflection
 
