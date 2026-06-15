@@ -21,6 +21,7 @@ const SearchBar = ({
 
   const [suggestions, setSuggestions] = useState([])
   const [isOpen, setIsOpen] = useState(false)
+  const [isActive, setIsActive] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [suggestError, setSuggestError] = useState(false)
   const containerRef = useRef(null)
@@ -61,11 +62,12 @@ const SearchBar = ({
     }
   }, [query])
 
-  // Close the dropdown when clicking outside the search area.
+  // Close the dropdown and deactivate when clicking outside the search area.
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
         setIsOpen(false)
+        setIsActive(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -90,41 +92,56 @@ const SearchBar = ({
     onSelectMovie?.(movie)
   }
 
-  const showDropdown = isOpen && query.trim().length > 0
+  const handleClear = () => {
+    if (!isControlled) setInternalQuery('')
+    onChange?.('')
+    setSuggestions([])
+    setSuggestError(false)
+    setIsOpen(false)
+    // Reset results back to the default (now playing) list.
+    onSearch?.('')
+  }
+
+  const hasQuery = query.trim().length > 0
+  const showDropdown = isOpen && hasQuery
 
   return (
-    <div className="searchbar-wrap" ref={containerRef}>
-      <form className="searchbar" onSubmit={handleSubmit} role="search">
-        <button type="submit" className="searchbar-icon" aria-label="Search">
-          <svg
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <line x1="16.5" y1="16.5" x2="21" y2="21" />
-          </svg>
-        </button>
-        <input
-          type="text"
-          className="searchbar-input"
-          placeholder={placeholder}
-          value={query}
-          onChange={handleChange}
-          onFocus={() => setIsOpen(true)}
-          aria-label={placeholder}
-          autoComplete="off"
-        />
-      </form>
+    <form className="searchbar-wrap" ref={containerRef} onSubmit={handleSubmit} role="search">
+      <div className="searchbar-field">
+        <div className="searchbar">
+          <button type="submit" className="searchbar-icon" aria-label="Search">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <line x1="16.5" y1="16.5" x2="21" y2="21" />
+            </svg>
+          </button>
+          <input
+            type="text"
+            className="searchbar-input"
+            placeholder={placeholder}
+            value={query}
+            onChange={handleChange}
+            onFocus={() => {
+              setIsOpen(true)
+              setIsActive(true)
+            }}
+            aria-label={placeholder}
+            autoComplete="off"
+          />
+        </div>
 
-      {showDropdown && (
-        <ul className="searchbar-dropdown" role="listbox">
+        {showDropdown && (
+          <ul className="searchbar-dropdown" role="listbox">
           {suggestions.map((movie) => (
             <li key={movie.id} role="option" aria-selected="false">
               <button
@@ -151,22 +168,39 @@ const SearchBar = ({
             </li>
           ))}
 
-          {suggestions.length === 0 && (
-            <li
-              className={`searchbar-empty${
-                suggestError ? ' searchbar-empty-error' : ''
-              }`}
-            >
-              {isLoading
-                ? 'Searching…'
-                : suggestError
-                  ? 'Couldn’t load suggestions'
-                  : 'No matches'}
-            </li>
-          )}
-        </ul>
+            {suggestions.length === 0 && (
+              <li
+                className={`searchbar-empty${
+                  suggestError ? ' searchbar-empty-error' : ''
+                }`}
+              >
+                {isLoading
+                  ? 'Searching…'
+                  : suggestError
+                    ? 'Couldn’t load suggestions'
+                    : 'No matches'}
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+
+      {isActive && (
+        <button type="submit" className="searchbar-submit">
+          Search
+        </button>
       )}
-    </div>
+
+      {isActive && (
+        <button
+          type="button"
+          className="searchbar-clear"
+          onClick={handleClear}
+        >
+          Clear
+        </button>
+      )}
+    </form>
   )
 }
 

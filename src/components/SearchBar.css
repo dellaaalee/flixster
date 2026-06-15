@@ -1,8 +1,17 @@
-/* Wrapper owns sizing and anchors the suggestions dropdown. */
+/* Wrapper lays out the search field and the (conditional) submit button. */
 .searchbar-wrap {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   max-width: 480px;
+}
+
+/* Field owns sizing and anchors the suggestions dropdown. */
+.searchbar-field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
 }
 
 /* Disney+ style search pill: rounded, translucent dark-blue fill, muted text */
@@ -54,6 +63,45 @@
 
 .searchbar-input::placeholder {
   color: #b1b1b1;
+}
+
+/* Clear button — sits beside Search, only while the search is active. */
+.searchbar-clear {
+  flex-shrink: 0;
+  padding: 12px 22px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.searchbar-clear:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Submit button — sits beside the field, only while the search is active. */
+.searchbar-submit {
+  flex-shrink: 0;
+  padding: 12px 22px;
+  background: #e50914;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.searchbar-submit:hover {
+  background: #ff2630;
 }
 
 /* Live suggestions dropdown */
