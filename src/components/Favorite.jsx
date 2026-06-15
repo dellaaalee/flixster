@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useUserMovies } from '../context/UserMoviesContext'
+import { useUserMovies } from '../context/useUserMovies'
 import './Favorite.css'
 
 const Favorite = ({ movie, onToggle }) => {

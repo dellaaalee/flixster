@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
 import MovieCarousel from '../components/MovieCarousel'
-import { useUserMovies } from '../context/UserMoviesContext'
+import { useUserMovies } from '../context/useUserMovies'
 import './ProfilePage.css'
 
 const ProfilePage = () => {

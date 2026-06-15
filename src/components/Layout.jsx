@@ -19,6 +19,7 @@ const Layout = () => {
     <div className="App">
       <Header
         onLogoClick={() => navigate('/')}
+        onBrowse={() => navigate('/')}
         onSearch={handleSearch}
         onSelectMovie={setSelectedMovie}
         onProfile={() => navigate('/profile')}

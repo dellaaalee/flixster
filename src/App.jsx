@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import { UserMoviesProvider } from './context/UserMoviesContext'
+import { UserMoviesProvider } from './context/UserMoviesProvider'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import ProfilePage from './pages/ProfilePage'
