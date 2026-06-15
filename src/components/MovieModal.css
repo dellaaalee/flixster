@@ -146,6 +146,79 @@
   line-height: 1.6;
 }
 
+.movie-modal-credits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.movie-modal-credit {
+  margin: 0;
+  color: #e5e5e5;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.movie-modal-credit-label {
+  margin-right: 8px;
+  color: #8c8c8c;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.movie-modal-tablist {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.movie-modal-tab {
+  padding: 10px 4px;
+  margin-bottom: -1px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8c8c8c;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.movie-modal-tab + .movie-modal-tab {
+  margin-left: 20px;
+}
+
+.movie-modal-tab:hover {
+  color: #ffffff;
+}
+
+.movie-modal-tab.is-active {
+  color: #ffffff;
+  border-bottom-color: #e50914;
+}
+
+.movie-modal-trailer-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000000;
+}
+
+.movie-modal-trailer-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .movie-modal-status {
   margin: 0;
   color: #b3b3b3;

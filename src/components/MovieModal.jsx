@@ -9,6 +9,7 @@ const MovieModal = ({ movie, onClose }) => {
   const [details, setDetails] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [activeTab, setActiveTab] = useState('cast')
 
   // Fetch full details (runtime, genres, overview) when a movie opens.
   useEffect(() => {
@@ -18,6 +19,7 @@ const MovieModal = ({ movie, onClose }) => {
     const load = async () => {
       setIsLoading(true)
       setError(null)
+      setActiveTab('cast')
       try {
         const data = await fetchMovieDetails(movie.id)
         if (!cancelled) setDetails(data)
@@ -76,6 +78,42 @@ const MovieModal = ({ movie, onClose }) => {
     ? `${Math.floor(details.runtime / 60)}h ${details.runtime % 60}m`
     : null
   const genres = details?.genres?.map((g) => g.name) ?? []
+
+  // Credits (from append_to_response=credits): director(s) from crew, and the
+  // top-billed cast. Sort cast by TMDb's billing `order` (lowest = lead) so we
+  // show the main stars rather than whatever order the API returns.
+  const directors =
+    details?.credits?.crew
+      ?.filter((c) => c.job === 'Director')
+      .map((c) => c.name) ?? []
+  const cast =
+    details?.credits?.cast
+      ?.slice()
+      .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
+      .slice(0, 5)
+      .map((c) => c.name) ?? []
+
+  // Trailer (from append_to_response=videos): pick the best YouTube clip —
+  // an official Trailer first, then any Trailer, then any Teaser.
+  const ytVideos =
+    details?.videos?.results?.filter((v) => v.site === 'YouTube') ?? []
+  const trailer =
+    ytVideos.find((v) => v.type === 'Trailer' && v.official) ??
+    ytVideos.find((v) => v.type === 'Trailer') ??
+    ytVideos.find((v) => v.type === 'Teaser') ??
+    null
+
+  // Build the tab list from whatever content this movie actually has.
+  const hasCredits = directors.length > 0 || cast.length > 0
+  const tabs = [
+    hasCredits && { id: 'cast', label: 'Cast & Crew' },
+    trailer && { id: 'trailer', label: 'Trailer' },
+  ].filter(Boolean)
+
+  // Fall back to the first available tab if the default ('cast') has no content.
+  const currentTab = tabs.some((t) => t.id === activeTab)
+    ? activeTab
+    : tabs[0]?.id
 
   return (
     <div
@@ -163,6 +201,71 @@ const MovieModal = ({ movie, onClose }) => {
                 overview={details.overview}
                 rating={details.vote_average ?? movie.vote_average}
               />
+            )}
+
+            {tabs.length > 0 && (
+              <div className="movie-modal-tabs">
+                <div className="movie-modal-tablist" role="tablist">
+                  {tabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      role="tab"
+                      id={`tab-${tab.id}`}
+                      aria-selected={currentTab === tab.id}
+                      aria-controls={`panel-${tab.id}`}
+                      className={`movie-modal-tab${
+                        currentTab === tab.id ? ' is-active' : ''
+                      }`}
+                      onClick={() => setActiveTab(tab.id)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {currentTab === 'cast' && hasCredits && (
+                  <div
+                    role="tabpanel"
+                    id="panel-cast"
+                    aria-labelledby="tab-cast"
+                    className="movie-modal-credits"
+                  >
+                    {directors.length > 0 && (
+                      <p className="movie-modal-credit">
+                        <span className="movie-modal-credit-label">
+                          {directors.length > 1 ? 'Directors' : 'Director'}
+                        </span>
+                        {directors.join(', ')}
+                      </p>
+                    )}
+
+                    {cast.length > 0 && (
+                      <p className="movie-modal-credit">
+                        <span className="movie-modal-credit-label">Cast</span>
+                        {cast.join(', ')}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {currentTab === 'trailer' && trailer && (
+                  <div
+                    role="tabpanel"
+                    id="panel-trailer"
+                    aria-labelledby="tab-trailer"
+                    className="movie-modal-trailer-frame"
+                  >
+                    <iframe
+                      src={`https://www.youtube.com/embed/${trailer.key}`}
+                      title={`${title} trailer`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>

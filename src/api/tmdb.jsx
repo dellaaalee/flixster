@@ -38,9 +38,15 @@ export const fetchNowPlaying = async (page = 1) => {
 }
 
 // Movie Details — the modal needs runtime and genres, which Now Playing omits.
-// Response fields used: title, runtime, release_date, genres, overview, backdrop_path.
+// append_to_response=credits,videos also brings back cast + crew and the
+// trailer/clip list in one request.
+// Response fields used: title, runtime, release_date, genres, overview,
+// backdrop_path, credits.cast, credits.crew, videos.results.
 export const fetchMovieDetails = (id) =>
-  request(`/movie/${id}`, { language: 'en-US' })
+  request(`/movie/${id}`, {
+    language: 'en-US',
+    append_to_response: 'credits,videos',
+  })
 
 // Search — title query, returns the same movie shape as Now Playing.
 export const searchMovies = async (query, page = 1) => {
