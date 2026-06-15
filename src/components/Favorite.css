@@ -1,0 +1,25 @@
+.card-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.card-action:hover {
+  background: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+  transform: scale(1.12);
+}
+
+.card-action-favorite.is-active {
+  color: #e50914;
+}

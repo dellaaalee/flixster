@@ -1,0 +1,21 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 56px;
+  background: #0b0b0b;
+  margin-top: auto;
+}
+
+.footer-text {
+  margin: 0;
+  color: #b3b3b3;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 22px 20px;
+  }
+}

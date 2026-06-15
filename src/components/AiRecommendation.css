@@ -1,0 +1,44 @@
+.ai-rec {
+  margin: 0;
+  padding: 16px 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(229, 9, 20, 0.12),
+    rgba(229, 9, 20, 0.04)
+  );
+  border: 1px solid rgba(229, 9, 20, 0.35);
+  border-radius: 10px;
+}
+
+.ai-rec-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ai-rec-spark {
+  color: #e50914;
+  font-size: 15px;
+}
+
+.ai-rec-text {
+  margin: 0;
+  color: #d2d2d2;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.ai-rec-loading {
+  color: #b3b3b3;
+  font-style: italic;
+}
+
+.ai-rec-error {
+  color: #ff6b6b;
+}

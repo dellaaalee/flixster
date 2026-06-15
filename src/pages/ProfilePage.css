@@ -1,0 +1,38 @@
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 56px 32px;
+  text-align: left;
+}
+
+.profile-hero-avatar {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e50914, #b00610);
+}
+
+.profile-hero-name {
+  margin: 0;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.profile-hero-stats {
+  margin: 6px 0 0;
+  color: #b3b3b3;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .profile-hero {
+    padding: 28px 20px 24px;
+  }
+
+  .profile-hero-name {
+    font-size: 24px;
+  }
+}

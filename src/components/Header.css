@@ -1,0 +1,153 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 18px 56px;
+  background: #0b0b0b;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-logo {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #e50914;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-family: inherit;
+  text-transform: uppercase;
+}
+
+.header-logo:hover {
+  background: none;
+  color: #ff2630;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.header-tab {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #b3b3b3;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  font-family: inherit;
+}
+
+.header-tab:hover {
+  background: none;
+  color: #ffffff;
+}
+
+/* Borderless inline search, muted like the nav text */
+.header-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.header-search-icon {
+  width: 17px;
+  height: 17px;
+  opacity: 0.7;
+  filter: brightness(0) invert(1);
+}
+
+.header-search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 15px;
+  width: 120px;
+  font-family: inherit;
+}
+
+.header-search-input::placeholder {
+  color: #b3b3b3;
+}
+
+/* Bell + profile pinned to the far right */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-left: auto;
+}
+
+.header-bell {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #e5e5e5;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.header-bell:hover {
+  background: none;
+  color: #ffffff;
+}
+
+.header-profile {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.header-profile:hover {
+  background: none;
+}
+
+.header-profile-avatar {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e50914, #b00610);
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 14px 20px;
+  }
+
+  /* Keep the logo, Browse, and profile on the top row, and
+     drop the search bar onto its own full-width row below. */
+  .header-logo {
+    order: 0;
+  }
+
+  .header-nav {
+    order: 1;
+  }
+
+  .header-actions {
+    order: 2;
+    gap: 16px;
+  }
+
+  .searchbar-wrap {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+}

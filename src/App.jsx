@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
+import { UserMoviesProvider } from './context/UserMoviesContext'
+import HomePage from './pages/HomePage'
+import ProfilePage from './pages/ProfilePage'
 
 const App = () => {
   return (
-    <div className="App">
-    
-    </div>
+    <UserMoviesProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+      </BrowserRouter>
+    </UserMoviesProvider>
   )
 }
 

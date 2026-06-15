@@ -1,0 +1,89 @@
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.25s ease;
+}
+
+.movie-card:hover {
+  background: none;
+  transform: scale(1.04);
+}
+
+.movie-card-poster {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1a1a1a;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.movie-card-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-card-actions {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.movie-card:hover .movie-card-actions,
+.movie-card:focus-within .movie-card-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.movie-card-rating {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  /* Scale with the card so the pill never overwhelms a small poster. */
+  font-size: clamp(11px, 1.1vw, 13px);
+  font-weight: 700;
+}
+
+.movie-card-star {
+  color: #f5c518;
+  font-size: 1em;
+  line-height: 1;
+}
+
+.movie-card-title {
+  margin: 0;
+  color: #e5e5e5;
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 600;
+  line-height: 1.3;
+  /* Wrap to at most two lines instead of hard-truncating a single line. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

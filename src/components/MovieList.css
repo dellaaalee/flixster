@@ -1,0 +1,134 @@
+.movie-grid {
+  display: grid;
+  /* Cap at 5 cards per row even at max width so cards stay large. */
+  grid-template-columns: repeat(6, 1fr);
+  gap: 28px 20px;
+  padding: 32px 56px 48px;
+}
+
+.movie-grid-item {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: movie-slide-in 0.5s ease forwards;
+}
+
+@keyframes movie-slide-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.movie-list-status {
+  padding: 48px 56px;
+  color: #b3b3b3;
+  font-size: 15px;
+}
+
+.movie-list-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 56px 56px;
+}
+
+.movie-list-more-error {
+  margin: 0;
+  color: #ff6b6b;
+  font-size: 14px;
+}
+
+.movie-list-more-button {
+  padding: 12px 36px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.movie-list-more-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.movie-list-more-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.movie-list-error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 48px 56px;
+  max-width: 520px;
+}
+
+.movie-list-error-title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.movie-list-error-detail {
+  margin: 0;
+  color: #b3b3b3;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.movie-list-retry {
+  margin-top: 4px;
+  padding: 10px 22px;
+  background: #e50914;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.movie-list-retry:hover {
+  background: #ff2630;
+}
+
+/* Step the column count down as the viewport narrows. */
+@media (max-width: 1024px) {
+  .movie-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 14px;
+    padding: 24px 20px 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .movie-grid-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
