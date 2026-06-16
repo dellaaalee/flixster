@@ -112,19 +112,21 @@ Deployed Application (optional): [Flixster Deployed Site](https://flixster-g0if.
 ### Walkthrough Video
 
 **Walkthrough video:** [Flixster Walkthrough] https://www.loom.com/share/f3e959fb029b48d8b2c36693702dce67
+
+
 ### Reflection
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
 
-Add your response here
+lab 2-4 or the weather report lab helped me to do this project. Specifically, doing the connection of api endpoints with react was helpful.
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-Add your response here
+If I had more time, I would have liked implement more of the profile page. I know we haven't learned the backend yet but the profile authentication would make the project more usable for the user. Right now, the profile page is just from localstorage and getting data from browser, but having a intensive backend would make the project cooler. 
 
-* Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
+* Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time? 
 
-Add your response here
+For this project demo, I think I did better in timing. Something cool that my peer did was linking the theater button with the user's location so they could buy the movie ticket. 
 
 ### Open-source libraries used
 
@@ -132,4 +134,4 @@ Add your response here
 
 ### Shout out
 
-Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer, instructor, TA, mentor, etc.
+daniel - helped with the api 
