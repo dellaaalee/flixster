@@ -111,8 +111,7 @@ Deployed Application (optional): [Flixster Deployed Site](https://flixster-g0if.
 
 ### Walkthrough Video
 
-**Walkthrough video:** [Flixster Walkthrough] https://www.loom.com/share/d10f1d8a4a3c4f32a25fd44d8199e2f5
-
+**Walkthrough video:** [Flixster Walkthrough] https://www.loom.com/share/f3e959fb029b48d8b2c36693702dce67
 ### Reflection
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
