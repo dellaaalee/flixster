@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 const AI_MODEL = 'openrouter/free'
@@ -31,28 +33,31 @@ Genres: ${genreList}
 Score: ${rating ?? 'unknown'} out of 10
 Overview: ${overview || 'No overview available.'}`
 
-  const res = await fetch(OPENROUTER_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: AI_MODEL,
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-      max_tokens: 150,
-      temperature: 0.7,
-    }),
-  })
-
-  if (!res.ok) {
-    throw new Error(`AI request failed (${res.status})`)
+  let data
+  try {
+    const res = await axios.post(
+      OPENROUTER_URL,
+      {
+        model: AI_MODEL,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt },
+        ],
+        max_tokens: 150,
+        temperature: 0.7,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    data = res.data
+  } catch (err) {
+    throw new Error(`AI request failed (${err.response?.status ?? 'network'})`)
   }
 
-  const data = await res.json()
   const text = data?.choices?.[0]?.message?.content?.trim()
   if (!text) {
     throw new Error('AI returned an empty response')

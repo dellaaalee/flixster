@@ -1,29 +1,33 @@
+import axios from 'axios'
+
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
-const BASE_URL = 'https://api.themoviedb.org/3'
 const IMAGE_BASE = 'https://image.tmdb.org/t/p'
 
 // Build a TMDb image URL. size defaults to w500 (used for posters).
 export const imageUrl = (path, size = 'w500') =>
   path ? `${IMAGE_BASE}/${size}${path}` : null
 
-// Shared fetch wrapper: injects the api_key, parses JSON, throws on failure.
+// Pre-configured axios instance: base URL set once, api_key attached to every
+// request's query string via the default params.
+const tmdb = axios.create({
+  baseURL: 'https://api.themoviedb.org/3',
+  params: { api_key: TMDB_API_KEY },
+})
+
+// Shared request wrapper: axios rejects on non-2xx and parses JSON for us, so
+// we just normalize the body. A non-object payload means an unexpected shape;
+// hand back an empty object so callers can normalize without crashing.
 const request = async (path, params = {}) => {
-  const url = new URL(`${BASE_URL}${path}`)
-  url.searchParams.set('api_key', TMDB_API_KEY)
-  for (const [key, value] of Object.entries(params)) {
-    url.searchParams.set(key, value)
+  try {
+    const { data } = await tmdb.get(path, { params })
+    return data && typeof data === 'object' ? data : {}
+  } catch (err) {
+    const status = err.response?.status
+    throw new Error(
+      `TMDb request failed${status ? ` (${status})` : ''}: ${err.message}`,
+    )
   }
-
-  const res = await fetch(url)
-  if (!res.ok) {
-    throw new Error(`TMDb request failed (${res.status}): ${res.statusText}`)
-  }
-
-  const data = await res.json()
-  // A 200 with a non-object body means the response shape is unexpected;
-  // hand back an empty object so callers can normalize without crashing.
-  return data && typeof data === 'object' ? data : {}
 }
 
 // Now Playing — returns 20 movies per page.

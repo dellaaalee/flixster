@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { fetchNowPlaying, searchMovies } from '../api/tmdb'
 import MovieCard from './MovieCard'
@@ -37,7 +37,7 @@ const MovieList = ({ query = '', onSelectMovie }) => {
       try {
         const { movies: results, totalPages: total } = await fetchPage(1)
         if (!cancelled) {
-          setMovies(results)
+          setMovies([...results].sort(SORT_OPTIONS[sortBy].compare))
           setPage(1)
           setTotalPages(total)
         }
@@ -83,12 +83,13 @@ const MovieList = ({ query = '', onSelectMovie }) => {
 
   const hasMore = page < totalPages
 
-  // Derived sorted copy: leaves `movies` (the fetched/appended order) untouched
-  // and recomputes only when the data or the chosen sort changes.
-  const sortedMovies = useMemo(
-    () => [...movies].sort(SORT_OPTIONS[sortBy].compare),
-    [movies, sortBy],
-  )
+  // Re-sort the already-loaded cards in place when the user picks a new sort.
+  // Load More never triggers this, so appending new movies leaves the cards
+  // already on screen exactly where they are.
+  const handleSortChange = (nextSort) => {
+    setSortBy(nextSort)
+    setMovies((prev) => [...prev].sort(SORT_OPTIONS[nextSort].compare))
+  }
 
   if (isLoading) {
     return <p className="movie-list-status">Loading movies…</p>
@@ -125,10 +126,10 @@ const MovieList = ({ query = '', onSelectMovie }) => {
 
   return (
     <>
-      <MovieSort value={sortBy} onChange={setSortBy} />
+      <MovieSort value={sortBy} onChange={handleSortChange} />
 
       <div className="movie-grid">
-        {sortedMovies.map((movie, index) => (
+        {movies.map((movie, index) => (
           <div
             key={movie.id}
             className="movie-grid-item"
